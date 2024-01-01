@@ -21,7 +21,7 @@ dependencies:
     specifier: ^18.2.0
     version: 18.2.0(react@18.2.0)
   react-hook-form:
-    specifier: ^7.40.0
+    specifier: ^7.49.2
     version: 7.49.2(react@18.2.0)
 
 devDependencies:

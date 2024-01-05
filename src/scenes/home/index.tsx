@@ -8,13 +8,28 @@ import SponsorForbes from "@/assets/SponsorForbes.png";
 import SponsorFortune from "@/assets/SponsorFortune.png";
 import AnchorLink from "react-anchor-link-smooth-scroll";
 import { motion } from "framer-motion";
+import { useEffect } from "react";
 type Props = {
   setSelectedPage: (value: SelectedPage) => void;
 };
 
 const Home = ({ setSelectedPage }: Props) => {
+
+  const url = `http://localhost:3004/posts`;
+  const getUser = async () =>{
+    const response = await fetch(url);
+    if(response.ok){
+      const data = await response.json();
+      console.log(data)
+    }
+  }
+  
+  useEffect(() =>{
+    getUser();
+  },[]);
   const isAboveMediumScreens = useMediaQuery("(min-width:1060px)");
   return (
+    
     <section id="home" className="gap-16 bg-gray-20 py-10 md:h-full md:pb-0 ">
       {/* IMAGE AND MAIN HEADER */}
       <motion.div

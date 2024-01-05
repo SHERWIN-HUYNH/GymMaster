@@ -1,9 +1,12 @@
 import { SelectedPage } from "@/shared/types";
 import { motion } from "framer-motion";
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import ContactUsPageGraphic from "@/assets/ContactUsPageGraphic.png";
 import HText from "@/shared/HText";
+import axios from "axios";
+import contactUs from "@/api/contactUs";
+
 type Props = {
   setSelectedPage: (value: SelectedPage) => void;
 };
@@ -11,7 +14,10 @@ type Props = {
 function ContactUs({ setSelectedPage }: Props) {
   const inputStyles = `mb-5 w-full rounded-lg bg-primary-300
   px-5 py-3 placeholder-white`;
-  
+
+  const [firstName, setFirstName] = useState("");
+  const [message, setMessage] = useState("");
+  const [email, setEmail] = useState("");
   const {
     register,
     trigger,
@@ -22,6 +28,9 @@ function ContactUs({ setSelectedPage }: Props) {
     const isValid = await trigger(); // coming to new form
     if (!isValid) {
       e.preventDefault();
+    }
+    if (email && message && firstName) {
+      contactUs({ firstName, email, message });
     }
   };
 
@@ -70,8 +79,9 @@ function ContactUs({ setSelectedPage }: Props) {
               target="_blank"
               onSubmit={onSubmit}
               method="POST"
+              autoComplete="false"
             >
-                {/* INPUT 1 */}
+              {/* INPUT 1 */}
               <input
                 className={inputStyles}
                 type="text"
@@ -80,14 +90,16 @@ function ContactUs({ setSelectedPage }: Props) {
                   required: true,
                   maxLength: 100,
                 })}
-                
+                onChange={(e) => {
+                  setFirstName(e.target.value);
+                }}
               />
               {errors.name && (
-                    <p className="mt-1 text-primary-500">
-                        {errors.name.type == "required" && "This filed is requied"}
-                        {errors.name.type == "maxLength" && "Max length is 100"}
-                    </p>
-                )}
+                <p className="mt-1 text-primary-500">
+                  {errors.name.type == "required" && "This filed is requied"}
+                  {errors.name.type == "maxLength" && "Max length is 100"}
+                </p>
+              )}
 
               {/* INPUT 2 */}
               <input
@@ -97,16 +109,19 @@ function ContactUs({ setSelectedPage }: Props) {
                 {...register("email", {
                   required: true,
                   pattern: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                })}    
+                })}
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                }}
               />
               {errors.email && (
-                    <p className="mt-1 text-primary-500">
-                        {errors.email.type == "required" && "This filed is requied"}
-                        {errors.email.type == "pattern" && "Invalid email address"}
-                    </p>
-                )}
+                <p className="mt-1 text-primary-500">
+                  {errors.email.type == "required" && "This filed is requied"}
+                  {errors.email.type == "pattern" && "Invalid email address"}
+                </p>
+              )}
 
-                 {/* INPUT 3 */}
+              {/* INPUT 3 */}
               <textarea
                 className={inputStyles}
                 rows={4}
@@ -114,32 +129,44 @@ function ContactUs({ setSelectedPage }: Props) {
                 placeholder="MESSAGE"
                 {...register("message", {
                   required: true,
-                  maxLength:2000,
-                })}    
+                  maxLength: 2000,
+                })}
+                onChange={(e) => {
+                  setMessage(e.target.value);
+                }}
               />
               {errors.message && (
-                    <p className="mt-1 text-primary-500">
-                        {errors.message.type == "required" && "This field is requied"}
-                        {errors.message.type == "maxLength" && "Max length is 2000"}
-                    </p>
-                )}
+                <p className="mt-1 text-primary-500">
+                  {errors.message.type == "required" && "This field is requied"}
+                  {errors.message.type == "maxLength" && "Max length is 2000"}
+                </p>
+              )}
 
-                <button type="submit" className="mt-5 rounded-lg bg-secondary-500 px-20 py-3 transition duration-500 hover:text-white">
-                    SUBMIT
-                </button>
+              <button
+                type="submit"
+                className="mt-5 rounded-lg bg-secondary-500 px-20 py-3 transition duration-500 hover:text-white"
+              >
+                SUBMIT
+              </button>
             </form>
           </motion.div>
-          <motion.div className="relative mt-16 basis-2/5 md:mt-0"
-           initial="hidden"
-           whileInView="visible"
-           viewport={{ once: true, amount: 0.5 }}
-           transition={{delay:0.2, duration: 0.5 }}
-           variants={{
-             hidden: { opacity: 0, y: -50 },
-             visible: { opacity: 1, y: 0 },
-           }}>
-            <div className="md:before:content-evolvetext w-full before:absolute before:-bottom-20 before:-right-20 z-[-1]">
-                <img className="w-full" src={ContactUsPageGraphic} alt="contact-us-page-graphic" />
+          <motion.div
+            className="relative mt-16 basis-2/5 md:mt-0"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.5 }}
+            transition={{ delay: 0.2, duration: 0.5 }}
+            variants={{
+              hidden: { opacity: 0, y: -50 },
+              visible: { opacity: 1, y: 0 },
+            }}
+          >
+            <div className="z-[-1] w-full before:absolute before:-bottom-20 before:-right-20 md:before:content-evolvetext">
+              <img
+                className="w-full"
+                src={ContactUsPageGraphic}
+                alt="contact-us-page-graphic"
+              />
             </div>
           </motion.div>
         </div>

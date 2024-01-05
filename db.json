@@ -1,0 +1,37 @@
+{
+  "posts": [
+    {
+      "id": 1,
+      "title": "json-server",
+      "author": "typicode"
+    },
+    {
+      "firstName": "Huynh Trung",
+      "email": "huynhchitrung020503@gmail.com",
+      "message": "fgagagfa",
+      "id": 2
+    },
+    {
+      "firstName": "Huynh Trung",
+      "email": "huynhchitrung020503@gmail.com",
+      "message": "fgagagfa",
+      "id": 3
+    },
+    {
+      "firstName": "Huỳnh Chí Trung",
+      "email": "huynhchitrung020503@gmail.com",
+      "message": "sfasfsafsf",
+      "id": 4
+    }
+  ],
+  "comments": [
+    {
+      "id": 1,
+      "body": "some comment",
+      "postId": 1
+    }
+  ],
+  "profile": {
+    "name": "typicode"
+  }
+}

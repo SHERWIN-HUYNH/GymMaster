@@ -7,9 +7,9 @@ export const config = {
 
 const app = new Hono().basePath('/api')
 
-app.get('/hello', (c) => {
+app.get('/sign-in', (c) => {
   return c.json({
-    message: 'Hello Next.js!',
+    message: 'SIGN IN SUCCESSFULLY',
   })
 })
 

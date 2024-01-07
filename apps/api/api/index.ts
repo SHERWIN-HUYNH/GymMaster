@@ -12,5 +12,9 @@ app.get('/sign-in', (c) => {
     message: 'SIGN IN SUCCESSFULLY',
   })
 })
-
+app.get('/sign-up',(c) => {
+  return c.json({
+    message: 'SIGN UP SUCCESSFULLY',
+  })
+})
 export default handle(app)

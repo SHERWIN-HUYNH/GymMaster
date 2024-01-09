@@ -1,20 +1,30 @@
-import { Hono } from 'hono'
-import { handle } from 'hono/vercel'
+import { Hono } from "hono";
+import { handle } from "hono/vercel";
 
 export const config = {
-    runtime: 'edge',
-}
+  runtime: "edge",
+};
 
-const app = new Hono().basePath('/api')
+const app = new Hono().basePath("/api");
 
-app.get('/sign-in', (c) => {
+app.get("/sign-in", (c) => {
   return c.json({
-    message: 'SIGN IN SUCCESSFULLY',
-  })
-})
-app.get('/sign-up',(c) => {
+    message: "SIGN IN SUCCESSFULLY",
+  });
+});
+
+app.get("/sign-up", async (c) => {
+  const { name, email } = await c.req.json();
   return c.json({
-    message: 'SIGN UP SUCCESSFULLY',
-  })
-})
-export default handle(app)
+    name,
+    email,
+  });
+});
+
+app.get("/hello", (c) => {
+  return c.json({
+    message: "hello SUCCESSFULLY",
+  });
+});
+
+export default handle(app);

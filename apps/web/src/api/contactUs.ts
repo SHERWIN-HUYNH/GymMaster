@@ -1,4 +1,5 @@
 import axios from "axios";
+import { request } from "./request";
 type Props = {
   firstName: string;
   email: string;
@@ -7,8 +8,8 @@ type Props = {
 const user = axios.create()
 const contactUs = async ({ firstName, email, message }: Props) => {
   
-  axios
-    .post(`https://gym-master-lake.vercel.app/api/user`, {
+  request
+    .post(`https://api-tau-seven-72.vercel.app/api/sign-in`, {
       firstName: firstName,
       email: email,
       message: message,

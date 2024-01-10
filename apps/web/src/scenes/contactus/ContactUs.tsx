@@ -6,6 +6,8 @@ import ContactUsPageGraphic from "@/assets/ContactUsPageGraphic.png";
 import HText from "@/shared/HText";
 import axios from "axios";
 import contactUs from "@/api/contactUs";
+import signIn from "@/api/signIn";
+import { useQuery } from "@tanstack/react-query";
 
 type Props = {
   setSelectedPage: (value: SelectedPage) => void;
@@ -15,7 +17,7 @@ function ContactUs({ setSelectedPage }: Props) {
   const inputStyles = `mb-5 w-full rounded-lg bg-primary-300
   px-5 py-3 placeholder-white`;
 
-  const [firstName, setFirstName] = useState("");
+  const [name, setname] = useState("");
   const [message, setMessage] = useState("");
   const [email, setEmail] = useState("");
   const {
@@ -24,13 +26,19 @@ function ContactUs({ setSelectedPage }: Props) {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = async (e: any) => {
-    const isValid = await trigger(); // coming to new form
-    if (!isValid) {
-      e.preventDefault();
-    }
-    if (email && message && firstName) {
-      contactUs({ firstName, email, message });
+  // CALL API
+  const onSubmit = async () => {
+    try {
+      // axios
+      //   .get("https://api-tau-seven-72.vercel.app/api/hello")
+      //   .then((res) => console.log(res));
+      const categoriesQuery = useQuery({
+        queryKey: ["sign-in"],
+        queryFn: signIn,
+        initialData: [],
+      });
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -91,7 +99,7 @@ function ContactUs({ setSelectedPage }: Props) {
                   maxLength: 100,
                 })}
                 onChange={(e) => {
-                  setFirstName(e.target.value);
+                  setname(e.target.value);
                 }}
               />
               {errors.name && (

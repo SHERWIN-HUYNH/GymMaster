@@ -12,9 +12,7 @@ import axios from "axios";
 function App() {
    
     
-  // const client = axios.create({
-  //   baseURL: "https://gym-master-lake.vercel.app" 
-  // });
+ 
 
 
   const [selectedPage, setSelectedPage] = useState<SelectedPage>(

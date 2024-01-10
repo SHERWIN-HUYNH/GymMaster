@@ -9,12 +9,9 @@ import Footer from "@/scenes/footer";
 import productApi from "./api/productApi";
 import axiosClient from "./api/axiosClient";
 import axios from "axios";
+import signIn from "./api/signIn";
 function App() {
-   
-    
- 
-
-
+  const [data, setData] = useState(null);
   const [selectedPage, setSelectedPage] = useState<SelectedPage>(
     SelectedPage.Home
   ); // you wanna explicit the type of useState
@@ -30,10 +27,22 @@ function App() {
         setSelectedPage(SelectedPage.Home);
       }
     };
-    
+
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  // CALL API
+  const signIn = async () => {
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/test`);
+    const json = await res.json();
+    return json.data;
+  };
+  useEffect(() => {
+    signIn();
+    console.log("SUCCEESS");
+  }, []);
+
   return (
     <div className="app bg-gray-20">
       {/* COMPONENTS HERE */}

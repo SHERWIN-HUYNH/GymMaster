@@ -3,11 +3,11 @@ import { request } from "./request";
 
 type Props = {
     name:string,
-    email:string
+    id:number
 }
 
-const signIn = async ()=>{
-  const res = await fetch(`${import.meta.env.VITE_API_URL}/sign-in`)
+const signIn = async (): Promise<Props>=>{
+  const res = await fetch(`${import.meta.env.VITE_API_URL}/test`)
   const json = await res.json()
   return json.data
   

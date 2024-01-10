@@ -15,18 +15,7 @@ type Props = {
 
 const Home = ({ setSelectedPage }: Props) => {
 
-  const url = `http://localhost:3004/posts`;
-  const getUser = async () =>{
-    const response = await fetch(url);
-    if(response.ok){
-      const data = await response.json();
-      console.log(data)
-    }
-  }
   
-  useEffect(() =>{
-    getUser();
-  },[]);
   const isAboveMediumScreens = useMediaQuery("(min-width:1060px)");
   return (
     

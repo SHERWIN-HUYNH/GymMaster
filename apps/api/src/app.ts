@@ -46,4 +46,4 @@ app.get("/hello", (c) => {
   });
 });
 
-export default handle(app);
+export default app;

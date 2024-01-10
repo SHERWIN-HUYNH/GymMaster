@@ -6,12 +6,12 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
     "strict": true,
-    "outDir": "modules",
+    "outDir": "src/modules",
     "baseUrl": "./",
     "paths": {
-      "@/*": ["modules/*"]
+      "@/*": ["src/modules/*"]
     }
   },
-  "include": ["modules/**/*"],
+  "include": ["src/modules/**/*", "src/app.ts"],
   "exclude": ["node_modules"]
 }

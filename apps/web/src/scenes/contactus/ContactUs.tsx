@@ -28,18 +28,7 @@ function ContactUs({ setSelectedPage }: Props) {
 
   // CALL API
   const onSubmit = async () => {
-    try {
-      // axios
-      //   .get("https://api-tau-seven-72.vercel.app/api/hello")
-      //   .then((res) => console.log(res));
-      const categoriesQuery = useQuery({
-        queryKey: ["sign-in"],
-        queryFn: signIn,
-        initialData: [],
-      });
-    } catch (error) {
-      console.log(error);
-    }
+      
   };
 
   return (

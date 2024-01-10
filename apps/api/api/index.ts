@@ -28,9 +28,16 @@ app.get("/sign-in", (c) => {
 // })
 
 app.get("/test", (c) => {
-  return c.json({
-    message: "hello SUCCESSFULLY",
-  });
+  return c.json(
+   [ {
+    name: "hello SUCCESSFULLY",
+    id: 1,
+  },
+  {
+    name: "HUYNH",
+    id: 2,
+  }]
+  );
 });
 app.get("/hello", (c) => {
   return c.json({

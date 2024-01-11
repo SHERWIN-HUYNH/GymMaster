@@ -12,6 +12,7 @@ router
     const { email, password } = await c.req.json();
     return c.json({ message:"SUCCESS" });
   })
+  .get("sign-in",)
   
   
  

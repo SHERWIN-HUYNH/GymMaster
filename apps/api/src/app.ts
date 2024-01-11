@@ -23,10 +23,6 @@ app.get("/sign-in", (c) => {
     message: "SIGN IN SUCCESSFULLY",
   });
 });
-// app.post("/sign-in",async (c) =>{
-//   const res = await c.req.json();
-//   return res.json()
-// })
 
 app.get("/test", (c) => {
   return c.json(

@@ -1,6 +1,5 @@
 import { Hono } from "hono";
 
-
 export const router = new Hono();
 
 router
@@ -8,11 +7,6 @@ router
     const { email, password } = await c.req.json();
     return c.json({ message: "Sign up successfully!" });
   })
-  .post("/sign-in", async (c) => {
-    const { email, password } = await c.req.json();
-    return c.json({ message:"SUCCESS" });
-  })
-  .get("sign-in",)
-  
-  
- 
+  .get("/sign-in", async (c) => {
+    return c.json({ message: "SUCCESS" });
+  });

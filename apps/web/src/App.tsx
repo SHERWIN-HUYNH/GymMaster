@@ -34,7 +34,7 @@ function App() {
 
   // CALL API
   const signIn = async () => {
-    const res = await fetch(`${import.meta.env.VITE_API_URL}/test`);
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/sign-in`);
     const json = await res.json();
     return json.data;
   };

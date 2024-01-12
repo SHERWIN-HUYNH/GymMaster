@@ -27,11 +27,13 @@ function ContactUs({ setSelectedPage }: Props) {
     formState: { errors },
   } = useForm();
 
-  // CALL API
-  const onSubmit = (e: { preventDefault: () => void; })=>{
-        e.preventDefault();
-  }
 
+  const onSubmit = async (e: any) => {
+    const isValid = await trigger();
+    if (!isValid) {
+      e.preventDefault();
+    }
+  };
   return (
     <section id="contactus" className="mx-auto w-5/6 pb-32 pt-24">
       <motion.div
@@ -73,7 +75,7 @@ function ContactUs({ setSelectedPage }: Props) {
             }}
           >
             <form
-              action="https://formsubmit.co/huynhchitrung020503@gmail.com"
+             
               target="_blank"
               onSubmit={onSubmit}
               method="POST"
@@ -126,7 +128,7 @@ function ContactUs({ setSelectedPage }: Props) {
                 {...register("password", {
                   required: true,
                   maxLength: 20,
-                  pattern:/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
+                  pattern:/^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\W)(?!.* ).{8,16}$/,
                 })}
                 onChange={(e) => {
                   setPassword(e.target.value);

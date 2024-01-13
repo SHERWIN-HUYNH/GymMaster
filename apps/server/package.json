@@ -3,7 +3,7 @@
   "scripts": {
     "postinstall": "prisma generate",
     "deploy": "vercel",
-    "start": "vercel dev --yes",
+    "start": "node public/index.js",
     "build": "tsc && tsc-alias",
     "dev": "tsx watch src/index.ts"
   },
@@ -25,3 +25,5 @@
     "typescript": "^5.3.3"
   }
 }
+
+

@@ -1,6 +1,7 @@
 datasource db {
   provider = "postgresql"
   url      = env("DB_URL")
+  relationMode = "prisma"
 }
 
 generator client {
@@ -11,6 +12,7 @@ generator client {
 model User{
     id String @id @default(cuid())
     name String
-    email String 
+    email String @unique
     password String 
+     @@map("User")
 }

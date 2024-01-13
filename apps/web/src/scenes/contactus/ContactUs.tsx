@@ -6,7 +6,7 @@ import ContactUsPageGraphic from "@/assets/ContactUsPageGraphic.png";
 import HText from "@/shared/HText";
 import axios from "axios";
 import contactUs from "@/api/contactUs";
-import signIn from "@/api/signIn";
+import signIn, { signUp } from "@/api/auth";
 import { useQuery } from "@tanstack/react-query";
 
 type Props = {
@@ -20,19 +20,23 @@ function ContactUs({ setSelectedPage }: Props) {
   const [name, setname] = useState("");
   const [message, setMessage] = useState("");
   const [email, setEmail] = useState("");
-  const [password,setPassword] = useState("")
+  const [password, setPassword] = useState("");
   const {
     register,
     trigger,
     formState: { errors },
+    getValues
   } = useForm();
-
 
   const onSubmit = async (e: any) => {
     const isValid = await trigger();
-    if (!isValid) {
+    const res = await signUp({name,email,password});
+    console.log(res)
+    
+   console.log(name,email,password)
+    // if (!isValid) {
       e.preventDefault();
-    }
+    // }
   };
   return (
     <section id="contactus" className="mx-auto w-5/6 pb-32 pt-24">
@@ -75,7 +79,6 @@ function ContactUs({ setSelectedPage }: Props) {
             }}
           >
             <form
-             
               target="_blank"
               onSubmit={onSubmit}
               method="POST"
@@ -120,15 +123,16 @@ function ContactUs({ setSelectedPage }: Props) {
                   {errors.email.type == "pattern" && "Invalid email address"}
                 </p>
               )}
-               {/* INPUT 3 */}
-               <input
+              {/* INPUT 3 */}
+              <input
                 className={inputStyles}
                 type="password"
                 placeholder="PASSWORD"
                 {...register("password", {
                   required: true,
                   maxLength: 20,
-                  pattern:/^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\W)(?!.* ).{8,16}$/,
+                  pattern:
+                    /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\W)(?!.* ).{8,16}$/,
                 })}
                 onChange={(e) => {
                   setPassword(e.target.value);
@@ -136,9 +140,12 @@ function ContactUs({ setSelectedPage }: Props) {
               />
               {errors.password && (
                 <p className="mt-1 text-primary-500">
-                  {errors.password.type == "required" && "This filed is requied"}
-                  {errors.password.type == "maxLength" && "THe length of password must be under 20 characters"}
-                  {errors.password.type == "pattern" && "Password must include at least 1 number and one special character"}
+                  {errors.password.type == "required" &&
+                    "This filed is requied"}
+                  {errors.password.type == "maxLength" &&
+                    "THe length of password must be under 20 characters"}
+                  {errors.password.type == "pattern" &&
+                    "Password must include at least 1 number and one special character"}
                 </p>
               )}
               {/* INPUT 4 */}
@@ -165,6 +172,7 @@ function ContactUs({ setSelectedPage }: Props) {
               <button
                 type="submit"
                 className="mt-5 rounded-lg bg-secondary-500 px-20 py-3 transition duration-500 hover:text-white"
+                onClick={onSubmit}
               >
                 SUBMIT
               </button>

@@ -1,8 +1,9 @@
 {
   "type": "module",
   "scripts": {
+    "postinstall": "prisma generate",
     "deploy": "vercel",
-    "start": "vercel dev"
+    "start": "vercel dev --yes"
   },
   "dependencies": {
     "@hono/node-server": "^1.4.0",

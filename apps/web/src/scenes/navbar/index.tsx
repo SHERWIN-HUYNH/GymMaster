@@ -19,7 +19,7 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import ContactUs from "../contactus/ContactUs";
 import FormSigIn from "@/shared/formSignIn";
-import signIn from "@/api/signIn";
+import signIn from "@/api/auth";
 import { useForm } from "react-hook-form";
 
 type Props = {
@@ -37,24 +37,23 @@ const Navbar = ({ isTopOfPage, selectedPage, setSelectedPage }: Props) => {
   const [isClicked, setIsClicked] = useState(false);
   const inputStyles = `mb-5 w-full rounded-lg bg-primary-300
     px-5 py-3 placeholder-white`;
-    const [name, setname] = useState("");
-    const [email, setEmail] = useState("");
-    const {
-      register,
-      trigger,
-      formState: { errors },
-    } = useForm();
-  
-    const onSubmit = async (e: any) => {
-      const isValid = await trigger(); // coming to new form
-      if (!isValid) {
-        e.preventDefault();
-      }
-      if (email  && name) {
-       signIn({name,email});
-        
-    };
+  const [name, setname] = useState("");
+  const [email, setEmail] = useState("");
+  const {
+    register,
+    trigger,
+    formState: { errors },
+  } = useForm();
+
+  const onSubmit = async (e: any) => {
+    const isValid = await trigger(); // coming to new form
+    if (!isValid) {
+      e.preventDefault();
     }
+    if (email && name) {
+      signIn({ name, email });
+    }
+  };
   return (
     <nav>
       <div
@@ -100,59 +99,68 @@ const Navbar = ({ isTopOfPage, selectedPage, setSelectedPage }: Props) => {
                     <DialogContent className="sm:max-w-[425px]">
                       <DialogHeader>
                         <DialogTitle>Sign in</DialogTitle>
-                        
                       </DialogHeader>
-                      
-                     {/* <FormSigIn/> */}
-                     <form
-        action="https://formsubmit.co/huynhchitrung020503@gmail.com"
-        target="_blank"
-        onSubmit={onSubmit}
-        method="POST"
-        autoComplete="false"
-        >
-        {/* INPUT 1 */}
-        <input
-        className={inputStyles}
-        type="text"
-        placeholder="NAME"
-        {...register("name", {
-            required: true,
-            maxLength: 100,
-        })}
-        onChange={(e) => {
-            setname(e.target.value);
-        }}
-        />
-        {errors.name && (
-        <p className="mt-1 text-primary-500">
-            {errors.name.type == "required" && "This filed is requied"}
-            {errors.name.type == "maxLength" && "Max length is 100"}
-        </p>
-        )}
 
-        {/* INPUT 2 */}
-        <input
-        className={inputStyles}
-        type="text"
-        placeholder="EMAIL"
-        {...register("email", {
-            required: true,
-            pattern: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-        })}
-        onChange={(e) => {
-            setEmail(e.target.value);
-        }}
-        />
-        {errors.email && (
-        <p className="mt-1 text-primary-500">
-            {errors.email.type == "required" && "This filed is requied"}
-            {errors.email.type == "pattern" && "Invalid email address"}
-        </p>
-        )}
-                    </form>
+                      {/* <FormSigIn/> */}
+                      <form
+                        action="https://formsubmit.co/huynhchitrung020503@gmail.com"
+                        target="_blank"
+                        onSubmit={onSubmit}
+                        method="POST"
+                        autoComplete="false"
+                      >
+                        {/* INPUT 1 */}
+                        <input
+                          className={inputStyles}
+                          type="text"
+                          placeholder="NAME"
+                          {...register("name", {
+                            required: true,
+                            maxLength: 100,
+                          })}
+                          onChange={(e) => {
+                            setname(e.target.value);
+                          }}
+                        />
+                        {errors.name && (
+                          <p className="mt-1 text-primary-500">
+                            {errors.name.type == "required" &&
+                              "This filed is requied"}
+                            {errors.name.type == "maxLength" &&
+                              "Max length is 100"}
+                          </p>
+                        )}
+
+                        {/* INPUT 2 */}
+                        <input
+                          className={inputStyles}
+                          type="text"
+                          placeholder="EMAIL"
+                          {...register("email", {
+                            required: true,
+                            pattern: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                          })}
+                          onChange={(e) => {
+                            setEmail(e.target.value);
+                          }}
+                        />
+                        {errors.email && (
+                          <p className="mt-1 text-primary-500">
+                            {errors.email.type == "required" &&
+                              "This filed is requied"}
+                            {errors.email.type == "pattern" &&
+                              "Invalid email address"}
+                          </p>
+                        )}
+                      </form>
                       <DialogFooter>
-                        <Button type="submit"  className="mt-5 rounded-lg bg-secondary-500 px-20 py-3 transition duration-500 hover:text-white" onClick={() => onSubmit}>SUBMIT</Button>                       
+                        <Button
+                          type="submit"
+                          className="mt-5 rounded-lg bg-secondary-500 px-20 py-3 transition duration-500 hover:text-white"
+                          onClick={() => onSubmit}
+                        >
+                          SUBMIT
+                        </Button>
                       </DialogFooter>
                     </DialogContent>
                   </Dialog>
@@ -214,4 +222,3 @@ export default Navbar;
 function trigger() {
   throw new Error("Function not implemented.");
 }
-

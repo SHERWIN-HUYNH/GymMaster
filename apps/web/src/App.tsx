@@ -31,16 +31,16 @@ function App() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // // CALL API
-  // const signIn = async () => {
-  //   const res = await fetch(`${import.meta.env.VITE_API_URL}/sign-in`);
-  //   const json = await res.json();
-  //   return json.data;
-  // };
-  // useEffect(() => {
-  //   signIn();
-  //   console.log("SUCCEESS");
-  // }, []);
+  // CALL API
+  const signIn = async () => {
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/sign-in`);
+    const json = await res.json();
+    return json.data;
+  };
+  useEffect(() => {
+    signIn();
+    console.log("SUCCEESS");
+  }, []);
 
   return (
     <div className="app bg-gray-20">

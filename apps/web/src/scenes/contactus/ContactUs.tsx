@@ -21,6 +21,7 @@ function ContactUs({ setSelectedPage }: Props) {
   const [message, setMessage] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
   const {
     register,
     trigger,
@@ -31,11 +32,10 @@ function ContactUs({ setSelectedPage }: Props) {
   const onSubmit = async (e: any) => {
     const isValid = await trigger();
     const res = await signUp({name,email,password});
-    console.log(res)
-    
+    // console.log(res);
    console.log(name,email,password)
     // if (!isValid) {
-      e.preventDefault();
+    e.preventDefault();
     // }
   };
   return (

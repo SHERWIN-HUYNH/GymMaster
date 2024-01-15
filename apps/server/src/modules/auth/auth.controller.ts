@@ -9,8 +9,8 @@ router
 
     await AuthService.signUp(name, email, password);
 
-    return c.json({ message: "Sign up successfully!" });
+    return c.json({ message: "Sign up successfully!" }); // UNSUCCESS 
   })
   .get("/sign-in", async (c) => {
-    return c.json({ message: "SUCCESSFULLY" });
+    return c.json({ message: "SUCCESSFULLY" }); // SUCCEESS 
   });

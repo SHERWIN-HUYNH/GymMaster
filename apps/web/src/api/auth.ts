@@ -19,7 +19,10 @@ const signIn = async (): Promise<Props>=>{
 export const signUp = async ({name, email, password }: SignUp) => {
   const res = await fetch(`${import.meta.env.VITE_API_URL}/sign-up`, {
     method: 'POST',
-    body: JSON.stringify({ name,email, password })
+    body: JSON.stringify({ name,email, password }),
+    headers: {
+      "Content-Type": "application/json",   
+    },
   })
   const data = await res.json()
   return data

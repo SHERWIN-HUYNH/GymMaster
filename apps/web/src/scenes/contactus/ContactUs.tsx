@@ -33,11 +33,12 @@ function ContactUs({ setSelectedPage }: Props) {
     const isValid = await trigger();
     const res = await signUp({name,email,password});
     // console.log(res);
-   console.log(name,email,password)
+    console.log(name,email,password)
     // if (!isValid) {
-    e.preventDefault();
+    
     // }
   };
+
   return (
     <section id="contactus" className="mx-auto w-5/6 pb-32 pt-24">
       <motion.div

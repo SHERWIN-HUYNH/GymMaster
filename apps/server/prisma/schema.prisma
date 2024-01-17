@@ -10,6 +10,7 @@ datasource db {
   relationMode = "prisma"
 }
 
+
 model Category {
   id   String  @id @default(cuid())
   name String  @unique

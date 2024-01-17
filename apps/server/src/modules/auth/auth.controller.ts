@@ -8,10 +8,6 @@ export const router = new Hono();
 
 router
   .post("/sign-up", zValidator("json", signUpDto), async (c) => {
-    const { email, password } = await c.req.json();
-
-    await AuthService.signUp(email, password);
-
     return c.json({ message: "Sign up successfully!" });
   })
   .post("/sign-in", zValidator("json", signInDto), async (c) => {
@@ -32,7 +28,7 @@ router
         message: "Forgot password successfully! Please check your email",
         status: 200,
       });
-    },
+    }
   )
   .post("/reset-password", auth, async (c) => {
     const user = c.get("user");

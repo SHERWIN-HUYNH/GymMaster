@@ -7,13 +7,13 @@ import { db } from "../../lib/db";
 
 export class AuthService {
   static async signUp(name: string, email: string, password: string) {
-    const user = await db.user.findUnique({
+    const users = await db.user.findUnique({
       where: {
         email,
       },
     });
 
-    if (user) {
+    if (users) {
       throw new BadRequestException("User already exists");
     }
 
@@ -27,7 +27,7 @@ export class AuthService {
         password: hashedPassword,
       },
     });
-    console.log(user);
+    console.log(users);
   }
   // static async getByWithError(email: string) {
   //   const user = await db.user.findUnique({

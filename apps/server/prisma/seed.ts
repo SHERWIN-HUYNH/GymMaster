@@ -3,11 +3,9 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 async function main() {
-  const data = await prisma.user.create({
-    data: {
-      name:"ChitrunHuynh",
-      email: "huynchitrung@gmail.com",
-      password:"Hello#world1"
+  const data = await prisma.user.delete({
+    where: {
+      email: "son.tran@enouvo.com",
     },
   });
 

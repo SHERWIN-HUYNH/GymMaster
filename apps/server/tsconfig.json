@@ -13,7 +13,6 @@
     "skipLibCheck": true,
     "strictNullChecks": false,
     "noImplicitAny": false,
-    "jsx": "react-jsx",
     "strictBindCallApply": false,
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false,
@@ -21,9 +20,9 @@
     "strict": true,
     "baseUrl": "./",
     "paths": {
-      "@/": ["src/"]
+      "@/*": ["src/*"]
     }
   },
-  "include": ["src/*/"],
+  "include": ["src/**/*"],
   "exclude": ["node_modules"]
 }

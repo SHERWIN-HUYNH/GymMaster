@@ -29,17 +29,17 @@ export class AuthService {
     });
     console.log(user);
   }
-  static async getByWithError(email: string) {
-    const user = await db.user.findUnique({
-      where: {
-        email,
-      },
-    });
-    if (!user) {
-      throw new BadRequestException("No user found");
-    }
-    return user;
-  }
+  // static async getByWithError(email: string) {
+  //   const user = await db.user.findUnique({
+  //     where: {
+  //       email,
+  //     },
+  //   });
+  //   if (!user) {
+  //     throw new BadRequestException("No user found");
+  //   }
+  //   return user;
+  // }
 
   // static async getByWithError(email: string) {
   //   const user = await db.user.findUnique({

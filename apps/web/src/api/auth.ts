@@ -10,8 +10,8 @@ interface SignUp {
   email: string
   password: string
 }
-const signIn = async (): Promise<Props>=>{
-  const res = await fetch(`${import.meta.env.VITE_API_URL}/test`)
+ const signIn = async (): Promise<Props>=>{
+  const res = await fetch(`${import.meta.env.VITE_API_URL}/sign-in`)
   const json = await res.json()
   return json.data
   
@@ -19,10 +19,7 @@ const signIn = async (): Promise<Props>=>{
 export const signUp = async ({name, email, password }: SignUp) => {
   const res = await fetch(`${import.meta.env.VITE_API_URL}/sign-up`, {
     method: 'POST',
-    body: JSON.stringify({ name,email, password }),
-    headers: {
-      "Content-Type": "application/json",   
-    },
+    body: JSON.stringify({ name,email, password })
   })
   const data = await res.json()
   return data

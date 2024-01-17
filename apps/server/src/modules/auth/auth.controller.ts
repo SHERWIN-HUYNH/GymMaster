@@ -12,7 +12,7 @@ router
     return c.json({ message: "Sign up successfully!" }); // UNSUCCESS 
   })
   .get("/sign-in", async (c) => {
-   const user = await AuthService.getByWithError("trung123@gmail.com");
-   return c.json({ message: "SUCCESSFULLY", data:user }); // SUCCEESS 
+   //const user = await AuthService.getByWithError("trung123@gmail.com");
+   return c.json({ message: "SUCCESSFULLY"}); // SUCCEESS 
   });
   

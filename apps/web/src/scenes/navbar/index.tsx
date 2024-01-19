@@ -21,9 +21,9 @@ import ContactUs from "../contactus/ContactUs";
 import FormSigIn from "@/shared/formSignIn";
 import signIn from "@/api/auth";
 import { useForm } from "react-hook-form";
-import {setToken} from '@/utils/token'
-import { toast,ToastContainer } from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.css';
+import { setToken } from "@/utils/token";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 type Props = {
   isTopOfPage: boolean;
   selectedPage: SelectedPage;
@@ -41,8 +41,8 @@ const Navbar = ({ isTopOfPage, selectedPage, setSelectedPage }: Props) => {
     px-5 py-3 placeholder-white`;
   const [fullName, setname] = useState("");
   const [email, setEmail] = useState("");
-  const [password,setPassword] = useState("");
-  
+  const [password, setPassword] = useState("");
+
   const {
     register,
     trigger,
@@ -50,22 +50,20 @@ const Navbar = ({ isTopOfPage, selectedPage, setSelectedPage }: Props) => {
   } = useForm();
 
   const onSubmit = async (e: any) => {
-
     const isValid = await trigger(); // coming to new form
     e.preventDefault();
     if (!isValid) {
     }
     try {
-      const res = await signIn({email,fullName,password})
-      setToken(res.accessToken)
-      toast.success('Login successfully!')
-      console.log(res.token)
+      const res = await signIn({ email, fullName, password });
+      setToken(res.accessToken);
+      toast.success("Login successfully!");
+      console.log(res.token);
     } catch (error) {
       if (error instanceof Error) {
-        toast.error(error.message)
+        toast.error(error.message);
       }
     }
-    
   };
   return (
     <nav>
@@ -115,10 +113,7 @@ const Navbar = ({ isTopOfPage, selectedPage, setSelectedPage }: Props) => {
                       </DialogHeader>
 
                       {/* <FormSigIn/> */}
-                      <form
-               
-                        autoComplete="false"
-                      >
+                      <form autoComplete="false">
                         {/* INPUT 1 */}
                         <input
                           className={inputStyles}
@@ -162,8 +157,8 @@ const Navbar = ({ isTopOfPage, selectedPage, setSelectedPage }: Props) => {
                               "Invalid email address"}
                           </p>
                         )}
-                         {/* INPUT 3 */}
-                         <input
+                        {/* INPUT 3 */}
+                        <input
                           className={inputStyles}
                           type="text"
                           placeholder="PASSWORD"
@@ -172,7 +167,7 @@ const Navbar = ({ isTopOfPage, selectedPage, setSelectedPage }: Props) => {
                             maxLength: 100,
                           })}
                           onChange={(e) => {
-                            setname(e.target.value);
+                            setPassword(e.target.value);
                           }}
                         />
                         {errors.password && (
@@ -199,7 +194,6 @@ const Navbar = ({ isTopOfPage, selectedPage, setSelectedPage }: Props) => {
                     Become a Member
                   </ActionButton>
                 </div>
-               
               </div>
             ) : (
               <button
@@ -211,7 +205,7 @@ const Navbar = ({ isTopOfPage, selectedPage, setSelectedPage }: Props) => {
             )}
           </div>
         </div>
-        <ToastContainer/>
+        <ToastContainer />
       </div>
       {/* MOBILE MENU MODAL */}
       {!isAboveMediumScreens && isMenuToggled && (

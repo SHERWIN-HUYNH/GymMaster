@@ -14,7 +14,7 @@ router
 
     return c.json({ message: "Sign up successfully!" });
   })
-  .post("/sign-in", zValidator("json", signInDto), async (c) => {
+  .post("/sign-in", async (c) => {
     const { email,fullname, password } = await c.req.json();
 
     const accessToken = await AuthService.signIn(email,fullname, password);

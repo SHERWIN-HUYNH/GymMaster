@@ -8,12 +8,16 @@ export const router = new Hono();
 
 router
   .post("/sign-up", zValidator("json", signUpDto), async (c) => {
+    const { email,fullName,password } = await c.req.json();
+
+    await AuthService.signUp(email,fullName, password);
+
     return c.json({ message: "Sign up successfully!" });
   })
   .post("/sign-in", zValidator("json", signInDto), async (c) => {
-    const { email, password } = await c.req.json();
+    const { email,fullname, password } = await c.req.json();
 
-    const accessToken = await AuthService.signIn(email, password);
+    const accessToken = await AuthService.signIn(email,fullname, password);
 
     return c.json({ accessToken: accessToken });
   })
@@ -28,7 +32,7 @@ router
         message: "Forgot password successfully! Please check your email",
         status: 200,
       });
-    }
+    },
   )
   .post("/reset-password", auth, async (c) => {
     const user = c.get("user");

@@ -6,8 +6,8 @@ interface Props {
     id:number
 }
 interface SignUp {
-  name: string
   email: string
+  fullName:string
   password: string
 }
  const signIn = async (): Promise<Props>=>{
@@ -16,10 +16,13 @@ interface SignUp {
   return json.data
   
 };
-export const signUp = async ({name, email, password }: SignUp) => {
+export const signUp = async ({ email,fullName, password }: SignUp) => {
   const res = await fetch(`${import.meta.env.VITE_API_URL}/sign-up`, {
     method: 'POST',
-    body: JSON.stringify({ name,email, password })
+    body: JSON.stringify({ email,fullName, password }),
+    headers: {
+      "Content-Type": "application/json",
+    },
   })
   const data = await res.json()
   return data

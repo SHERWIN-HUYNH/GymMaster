@@ -10,63 +10,11 @@ datasource db {
   relationMode = "prisma"
 }
 
-
-model Category {
-  id   String  @id @default(cuid())
-  name String  @unique
-  icon String?
-  Room Room[]
-
-  @@map("categories")
-}
-
 model User {
   id       String   @id @default(cuid())
   email    String   @unique
-  fullName String?
-  age      Int?
-  avatar   String?
-  phone    String?
+  fullName String
   password String
-  Room     Room[]
-  Review   Review[]
-
   @@map("users")
 }
 
-model Room {
-  id          String   @id @default(cuid())
-  name        String
-  price       Int
-  location    String
-  startDate   DateTime
-  endDate     DateTime
-  rate        Float
-  images      String[]
-  description String
-  categoryId  String
-  category    Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
-  userId      String
-  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  Review      Review[]
-
-  @@index([categoryId])
-  @@index([userId])
-  @@map("rooms")
-}
-
-model Review {
-  id        String   @id @default(cuid())
-  userId    String
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  roomId    String
-  room      Room     @relation(fields: [roomId], references: [id], onDelete: Cascade)
-  comment   String
-  rate      Int
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@index([userId])
-  @@index([roomId])
-  @@map("reviews")
-}

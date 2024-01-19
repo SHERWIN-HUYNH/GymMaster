@@ -17,7 +17,7 @@ function ContactUs({ setSelectedPage }: Props) {
   const inputStyles = `mb-5 w-full rounded-lg bg-primary-300
   px-5 py-3 placeholder-white`;
 
-  const [name, setname] = useState("");
+  const [fullName, setFullName] = useState("");
   const [message, setMessage] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -31,9 +31,9 @@ function ContactUs({ setSelectedPage }: Props) {
 
   const onSubmit = async (e: any) => {
     const isValid = await trigger();
-    const res = await signUp({name,email,password});
+    const res = await signUp({email,fullName,password});
     // console.log(res);
-    console.log(name,email,password)
+    console.log(res)
     // if (!isValid) {
     
     // }
@@ -95,7 +95,7 @@ function ContactUs({ setSelectedPage }: Props) {
                   maxLength: 100,
                 })}
                 onChange={(e) => {
-                  setname(e.target.value);
+                  setFullName(e.target.value);
                 }}
               />
               {errors.name && (

@@ -17,17 +17,14 @@ app.use(
   cors({
     origin: [
       "http://localhost:5173",
-      "https://airbnb-clone-nu-rouge.vercel.app",
+      "https://gym-master-server.vercel.app",
     ],
     credentials: true,
   }),
 );
 
 app.route("/", auth);
-app.route("/categories", categories);
-app.route("/reviews", reviews);
-app.route("/rooms", rooms);
-app.route("/users", users);
+
 
 app.notFound((c) => {
   return c.json(

@@ -10,7 +10,7 @@ import { mailService } from "@/lib/mail.service";
 const ACCESS_TOKEN_EXPIRE_IN = 60 * 60;
 
 export class AuthService {
-  static async signUp(email: string, password: string) {
+  static async signUp(email: string,fullName:string, password: string) {
     const user = await db.user.findUnique({
       where: {
         email,
@@ -24,9 +24,10 @@ export class AuthService {
     const salt = bcrypt.genSaltSync();
     const hashedPassword = await bcrypt.hash(password, salt);
 
-    await db.user.create({
+   await db.user.create({
       data: {
         email,
+        fullName,
         password: hashedPassword,
       },
     });
@@ -38,7 +39,7 @@ export class AuthService {
     });
   }
 
-  static async signIn(email: string, password: string) {
+  static async signIn(email: string, fullname:string,password: string) {
     const user = await UsersService.getByWithError(email);
 
     const isMatch = await bcrypt.compare(password, user.password);

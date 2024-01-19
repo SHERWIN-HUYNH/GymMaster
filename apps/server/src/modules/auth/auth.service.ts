@@ -40,7 +40,7 @@ export class AuthService {
   }
 
   static async signIn(email: string, fullname:string,password: string) {
-    const user = await UsersService.getByWithError(email);
+    const user = await UsersService.getByWithError(email,fullname);
 
     const isMatch = await bcrypt.compare(password, user.password);
 
@@ -53,17 +53,17 @@ export class AuthService {
     return accessToken;
   }
 
-  static async forgotPassword(email: string) {
-    const user = await UsersService.getByWithError(email);
+  // static async forgotPassword(email: string) {
+  //   const user = await UsersService.getByWithError(email);
 
-    const accessToken = AuthService.createToken(user);
+  //   const accessToken = AuthService.createToken(user);
 
-    await mailService.sendMail({
-      to: user.email,
-      subject: "Reset password",
-      html: `<a href='https://airbnb-clone-nu-rouge.vercel.app/reset-password?token=${accessToken}'> Reset password </a>`,
-    });
-  }
+  //   await mailService.sendMail({
+  //     to: user.email,
+  //     subject: "Reset password",
+  //     html: `<a href='https://airbnb-clone-nu-rouge.vercel.app/reset-password?token=${accessToken}'> Reset password </a>`,
+  //   });
+  // }
 
   static async resetPassword(user: User, newPassword: string) {
     const isMatch = await bcrypt.compare(newPassword, user.password);

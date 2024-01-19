@@ -21,19 +21,19 @@ router
 
     return c.json({ accessToken: accessToken });
   })
-  .post(
-    "/forgot-password",
-    zValidator("json", forgotPasswordDto),
-    async (c) => {
-      const { email } = await c.req.json();
-      await AuthService.forgotPassword(email);
+  // .post(
+  //   "/forgot-password",
+  //   zValidator("json", forgotPasswordDto),
+  //   async (c) => {
+  //     const { email } = await c.req.json();
+  //     await AuthService.forgotPassword(email);
 
-      return c.json({
-        message: "Forgot password successfully! Please check your email",
-        status: 200,
-      });
-    },
-  )
+  //     return c.json({
+  //       message: "Forgot password successfully! Please check your email",
+  //       status: 200,
+  //     });
+  //   },
+  // )
   .post("/reset-password", auth, async (c) => {
     const user = c.get("user");
     const { password } = await c.req.json();

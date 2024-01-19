@@ -3,10 +3,7 @@ import { serve } from "@hono/node-server";
 import { cors } from "hono/cors";
 import { logger } from "hono/logger";
 import { router as auth } from "./modules/auth/auth.controller";
-import { router as categories } from "./modules/categories/categories.controller";
-import { router as rooms } from "./modules/rooms/rooms.controller";
 import { router as users } from "./modules/users/users.controller";
-import { router as reviews } from "./modules/reviews/reviews.controller";
 import { errorFilter } from "./lib/error-filter";
 
 const app = new Hono().basePath("/api");

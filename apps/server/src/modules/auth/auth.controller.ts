@@ -7,7 +7,7 @@ import { auth } from "@/middlewares/auth";
 export const router = new Hono();
 
 router
-  .post("/sign-up", zValidator("json", signUpDto), async (c) => {
+  .post("/sign-up", async (c) => {
     const { email,fullName,password } = await c.req.json();
 
     await AuthService.signUp(email,fullName, password);

@@ -65,6 +65,9 @@ const Navbar = ({ isTopOfPage, selectedPage, setSelectedPage }: Props) => {
       }
     }
   };
+  const forgetPassword = async (params: any) => {
+    console.log("FORGET PASSWORD");
+  };
   return (
     <nav>
       <div
@@ -179,6 +182,13 @@ const Navbar = ({ isTopOfPage, selectedPage, setSelectedPage }: Props) => {
                           </p>
                         )}
                       </form>
+                      {/* FORGOT PASSWORD */}
+                      <p
+                        className="hover:text-primary-200 text-sm font-bold text-primary-500 underline hover:cursor-pointer"
+                        onClick={forgetPassword}
+                      >
+                        Forget Password
+                      </p>
                       <DialogFooter>
                         <Button
                           type="submit"

@@ -61,9 +61,13 @@ export class AuthService {
 
   static async forgotPassword(email:string){
     const user = await UsersService.getByWithError(email);
-    if (!user) {
-      throw new BadRequestException("No user found");
-    }
+    const accessToken = AuthService.createToken(user);
+
+    await mailService.sendMail({
+      to: user.email,
+      subject: "Reset password",
+      html: `<a href='https://gym-master-server.vercel.app'> Reset password </a>`,
+    });
   }
   // static async forgotPassword(email: string) {
   //   const user = await UsersService.getByWithError(email);

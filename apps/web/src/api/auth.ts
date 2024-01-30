@@ -10,7 +10,11 @@ interface SignUp {
   fullName:string
   password: string
 }
- export const signIn = async ({ email, password }: SignUp)=>{
+interface SignIn {
+  email: string
+  password: string
+}
+ export const signIn = async ({ email, password }: SignIn)=>{
     const res = await request.post("/sign-in",{
       email,password
     })

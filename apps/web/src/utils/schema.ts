@@ -1,6 +1,6 @@
 import * as z from 'zod'
 
-export const loginSchema = z.object({
+export const signUpSchema = z.object({
   email: z.string().email({ message: 'Email is not valid!' }),
   fullName: z
   .string()
@@ -12,6 +12,10 @@ export const loginSchema = z.object({
       .max(32, { message: 'First name is too long' })
       .refine((value: string) => /^[a-zA-Z]+[-'s]?[a-zA-Z]+$/.test(value), 'Full name should contain only alphabets')
   ),
+  password: z.string().min(6, { message: 'Password must be at least 6 characters!' })
+})
+export const loginSchema = z.object({
+  email: z.string().email({ message: 'Email is not valid!' }),
   password: z.string().min(6, { message: 'Password must be at least 6 characters!' })
 })
 

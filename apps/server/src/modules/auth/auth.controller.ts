@@ -24,7 +24,10 @@ router
   .post("/forgot-password",async (c) => {
     const { email } = await c.req.json();
     await AuthService.forgotPassword(email);
-    return c.json({ message: "Email exits" });
+    return c.json({
+      message: "Forgot password successfully! Please check your email",
+      status: 200,
+    });
   })
 
   // .post(

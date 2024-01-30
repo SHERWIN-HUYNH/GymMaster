@@ -49,7 +49,7 @@ export default function FormSignIn({ onSubmit }: Props) {
           <p className="mt-1 text-primary-500">{errors.email.message}</p>
         )}
        
-        {/* INPUT 3 */}
+        {/* INPUT 2 */}
         <Input
           className={inputStyles}
           {...register("password")}

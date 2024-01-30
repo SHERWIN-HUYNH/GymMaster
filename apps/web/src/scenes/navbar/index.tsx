@@ -15,15 +15,12 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
-import ContactUs from "../contactus/ContactUs";
-import FormSigIn from "@/shared/formSignIn";
-import signIn from "@/api/auth";
-import { useForm } from "react-hook-form";
+import { signIn } from "@/api/auth";
 import { setToken } from "@/utils/token";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { SignIn } from "./FormSignIn";
+import FormSignIn from "./FormSignIn";
 type Props = {
   isTopOfPage: boolean;
   selectedPage: SelectedPage;
@@ -36,37 +33,14 @@ const Navbar = ({ isTopOfPage, selectedPage, setSelectedPage }: Props) => {
   const isAboveMediumScreens = useMediaQuery("(min-width: 1060px)");
   const navabarBackground = isTopOfPage ? "" : "bg-primary-100 drop-shadow";
 
-  const [isClicked, setIsClicked] = useState(false);
-  const inputStyles = `mb-5 w-full rounded-lg bg-primary-300
-    px-5 py-3 placeholder-white`;
-  const [fullName, setname] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
 
-  const {
-    register,
-    trigger,
-    formState: { errors },
-  } = useForm();
-
-  const onSubmit = async (e: any) => {
-    const isValid = await trigger(); // coming to new form
-    e.preventDefault();
-    if (!isValid) {
-    }
+  const onLoginSubmit = async (data: SignIn) => {
     try {
-      const res = await signIn({ email, fullName, password });
+      const res = await signIn(data);
       setToken(res.accessToken);
-      toast.success("Login successfully!");
-      console.log(res.token);
     } catch (error) {
-      if (error instanceof Error) {
-        toast.error(error.message);
-      }
+      if (error instanceof Error) toast.error(error.message);
     }
-  };
-  const forgetPassword = async (params: any) => {
-    console.log("FORGET PASSWORD");
   };
   return (
     <nav>
@@ -116,88 +90,24 @@ const Navbar = ({ isTopOfPage, selectedPage, setSelectedPage }: Props) => {
                       </DialogHeader>
 
                       {/* <FormSigIn/> */}
-                      <form autoComplete="false">
-                        {/* INPUT 1 */}
-                        <input
-                          className={inputStyles}
-                          type="text"
-                          placeholder="NAME"
-                          {...register("name", {
-                            required: true,
-                            maxLength: 100,
-                          })}
-                          onChange={(e) => {
-                            setname(e.target.value);
-                          }}
-                        />
-                        {errors.name && (
-                          <p className="mt-1 text-primary-500">
-                            {errors.name.type == "required" &&
-                              "This filed is requied"}
-                            {errors.name.type == "maxLength" &&
-                              "Max length is 100"}
-                          </p>
-                        )}
-
-                        {/* INPUT 2 */}
-                        <input
-                          className={inputStyles}
-                          type="text"
-                          placeholder="EMAIL"
-                          {...register("email", {
-                            required: true,
-                            pattern: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                          })}
-                          onChange={(e) => {
-                            setEmail(e.target.value);
-                          }}
-                        />
-                        {errors.email && (
-                          <p className="mt-1 text-primary-500">
-                            {errors.email.type == "required" &&
-                              "This filed is requied"}
-                            {errors.email.type == "pattern" &&
-                              "Invalid email address"}
-                          </p>
-                        )}
-                        {/* INPUT 3 */}
-                        <input
-                          className={inputStyles}
-                          type="text"
-                          placeholder="PASSWORD"
-                          {...register("password", {
-                            required: true,
-                            maxLength: 100,
-                          })}
-                          onChange={(e) => {
-                            setPassword(e.target.value);
-                          }}
-                        />
-                        {errors.password && (
-                          <p className="mt-1 text-primary-500">
-                            {errors.password.type == "required" &&
-                              "This filed is requied"}
-                            {errors.password.type == "maxLength" &&
-                              "Max length is 100"}
-                          </p>
-                        )}
-                      </form>
+                      <FormSignIn onSubmit={onLoginSubmit} />
                       {/* FORGOT PASSWORD */}
-                      <p
-                        className="hover:text-primary-200 text-sm font-bold text-primary-500 underline hover:cursor-pointer"
-                        onClick={forgetPassword}
-                      >
-                        Forget Password
-                      </p>
-                      <DialogFooter>
-                        <Button
-                          type="submit"
-                          className="mt-5 rounded-lg bg-secondary-500 px-20 py-3 transition duration-500 hover:text-white"
-                          onClick={onSubmit}
-                        >
-                          SUBMIT
-                        </Button>
-                      </DialogFooter>
+                      <Dialog>
+                          <DialogTrigger>
+                            {" "}
+                            <div>
+                              <p
+                                className="hover:text-primary-200 text-sm font-bold text-primary-500 underline hover:cursor-pointer"
+                                onClick={() => console.log("HELLO")}
+                              >
+                                Forget password ?
+                              </p>
+                            </div>
+                          </DialogTrigger>
+                          <DialogContent className="sm:max-w-[425px]">
+                            <FormSignIn onSubmit={onLoginSubmit} />
+                          </DialogContent>
+                        </Dialog>
                     </DialogContent>
                   </Dialog>
                   <ActionButton setSelectedPage={setSelectedPage}>

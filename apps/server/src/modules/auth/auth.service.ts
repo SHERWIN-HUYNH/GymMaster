@@ -6,31 +6,37 @@ import * as bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { UsersService } from "../users/users.services";
 import { mailService } from "@/lib/mail.service";
+import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 
 const ACCESS_TOKEN_EXPIRE_IN = 60 * 60;
 
 export class AuthService {
   static async signUp(email: string,fullName:string, password: string) {
-    const user = await db.user.findUnique({
-      where: {
-        email,
-      },
-    });
-
-    if (user) {
-      throw new BadRequestException("User already exists");
-    }
-
-    const salt = bcrypt.genSaltSync();
-    const hashedPassword = await bcrypt.hash(password, salt);
-
-   await db.user.create({
-      data: {
-        email,
-        fullName,
-        password: hashedPassword,
-      },
-    });
+      try {
+        const user = await db.user.findUnique({
+          where: {
+            email,
+          },
+        });
+    
+        if (user) {
+          throw new BadRequestException("User already exists");
+        }
+    
+        const salt = bcrypt.genSaltSync();
+        const hashedPassword = await bcrypt.hash(password, salt);
+    
+       await db.user.create({
+          data: {
+            email,
+            fullName,
+            password: hashedPassword,
+          },
+        });
+      } catch (error) {
+        if(error instanceof PrismaClientKnownRequestError)
+        throw new BadRequestException("FAIL FAIL")
+      }
   }
 
   static createToken(user: User) {
@@ -39,8 +45,8 @@ export class AuthService {
     });
   }
 
-  static async signIn(email: string, fullname:string,password: string) {
-    const user = await UsersService.getByWithError(email,fullname);
+  static async signIn(email: string,password: string) {
+    const user = await UsersService.getByWithError(email);
 
     const isMatch = await bcrypt.compare(password, user.password);
 
@@ -53,9 +59,14 @@ export class AuthService {
     return accessToken;
   }
 
+  static async forgotPassword(email:string){
+    const user = await UsersService.getByWithError(email);
+    if (!user) {
+      throw new BadRequestException("No user found");
+    }
+  }
   // static async forgotPassword(email: string) {
   //   const user = await UsersService.getByWithError(email);
-
   //   const accessToken = AuthService.createToken(user);
 
   //   await mailService.sendMail({
@@ -65,25 +76,25 @@ export class AuthService {
   //   });
   // }
 
-  static async resetPassword(user: User, newPassword: string) {
-    const isMatch = await bcrypt.compare(newPassword, user.password);
+  // static async resetPassword(user: User, newPassword: string) {
+  //   const isMatch = await bcrypt.compare(newPassword, user.password);
 
-    if (isMatch) {
-      throw new UnauthorizedException(
-        "New password must be different from old password",
-      );
-    }
+  //   if (isMatch) {
+  //     throw new UnauthorizedException(
+  //       "New password must be different from old password",
+  //     );
+  //   }
 
-    const salt = bcrypt.genSaltSync();
-    const hashedNewPassword = await bcrypt.hash(newPassword, salt);
+  //   const salt = bcrypt.genSaltSync();
+  //   const hashedNewPassword = await bcrypt.hash(newPassword, salt);
 
-    return db.user.update({
-      where: {
-        email: user.email,
-      },
-      data: {
-        password: hashedNewPassword,
-      },
-    });
-  }
+  //   return db.user.update({
+  //     where: {
+  //       email: user.email,
+  //     },
+  //     data: {
+  //       password: hashedNewPassword,
+  //     },
+  //   });
+  // }
 }

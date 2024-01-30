@@ -32,3 +32,4 @@ export const auth = async (c: Context, next: Next) => {
 
   await next();
 };
+

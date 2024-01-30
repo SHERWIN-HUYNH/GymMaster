@@ -3,11 +3,11 @@ import { BadRequestException } from "@/lib/exceptions";
 import { Prisma } from "@prisma/client";
 
 export class UsersService {
-  static async getByWithError(email: string,fullName:string) {
+  static async getByWithError(email: string) {
     const user = await db.user.findUnique({
       where: {
         email,
-        fullName
+     
       },
     });
     if (!user) {

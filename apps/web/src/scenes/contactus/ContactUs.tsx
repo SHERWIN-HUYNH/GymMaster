@@ -6,39 +6,28 @@ import ContactUsPageGraphic from "@/assets/ContactUsPageGraphic.png";
 import HText from "@/shared/HText";
 import axios from "axios";
 import contactUs from "@/api/contactUs";
-import signIn, { signUp } from "@/api/auth";
+import { signUp } from "@/api/auth";
 import { useQuery } from "@tanstack/react-query";
+import { toast } from "react-toastify";
+import FormSignUp, { SignUp } from "./FormSignUp";
+import { setToken } from "@/utils/token";
 
 type Props = {
   setSelectedPage: (value: SelectedPage) => void;
 };
 
 function ContactUs({ setSelectedPage }: Props) {
-  const inputStyles = `mb-5 w-full rounded-lg bg-primary-300
-  px-5 py-3 placeholder-white`;
 
-  const [fullName, setFullName] = useState("");
-  const [message, setMessage] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
 
-  const {
-    register,
-    trigger,
-    formState: { errors },
-    getValues
-  } = useForm();
 
-  const onSubmit = async (e: any) => {
-    const isValid = await trigger();
-    const res = await signUp({email,fullName,password});
-    // console.log(res);
-    console.log(res)
-    // if (!isValid) {
-    
-    // }
+  const onLoginSubmit = async (data: SignUp) => {
+    try {
+      const res = await signUp(data);
+      setToken(res.accessToken);
+    } catch (error) {
+      if (error instanceof Error) toast.error(error.message);
+    }
   };
-
   return (
     <section id="contactus" className="mx-auto w-5/6 pb-32 pt-24">
       <motion.div
@@ -79,105 +68,9 @@ function ContactUs({ setSelectedPage }: Props) {
               visible: { opacity: 1, y: 0 },
             }}
           >
-            <form
-              target="_blank"
-              onSubmit={onSubmit}
-              method="POST"
-              autoComplete="false"
-            >
-              {/* INPUT 1 */}
-              <input
-                className={inputStyles}
-                type="text"
-                placeholder="NAME"
-                {...register("name", {
-                  required: true,
-                  maxLength: 100,
-                })}
-                onChange={(e) => {
-                  setFullName(e.target.value);
-                }}
-              />
-              {errors.name && (
-                <p className="mt-1 text-primary-500">
-                  {errors.name.type == "required" && "This filed is requied"}
-                  {errors.name.type == "maxLength" && "Max length is 100"}
-                </p>
-              )}
+          {/* FORM HERE */}
+          <FormSignUp onSubmit={onLoginSubmit}/>
 
-              {/* INPUT 2 */}
-              <input
-                className={inputStyles}
-                type="text"
-                placeholder="EMAIL"
-                {...register("email", {
-                  required: true,
-                  pattern: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                })}
-                onChange={(e) => {
-                  setEmail(e.target.value);
-                }}
-              />
-              {errors.email && (
-                <p className="mt-1 text-primary-500">
-                  {errors.email.type == "required" && "This filed is requied"}
-                  {errors.email.type == "pattern" && "Invalid email address"}
-                </p>
-              )}
-              {/* INPUT 3 */}
-              <input
-                className={inputStyles}
-                type="password"
-                placeholder="PASSWORD"
-                {...register("password", {
-                  required: true,
-                  maxLength: 20,
-                  pattern:
-                    /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\W)(?!.* ).{8,16}$/,
-                })}
-                onChange={(e) => {
-                  setPassword(e.target.value);
-                }}
-              />
-              {errors.password && (
-                <p className="mt-1 text-primary-500">
-                  {errors.password.type == "required" &&
-                    "This filed is requied"}
-                  {errors.password.type == "maxLength" &&
-                    "THe length of password must be under 20 characters"}
-                  {errors.password.type == "pattern" &&
-                    "Password must include at least 1 number and one special character"}
-                </p>
-              )}
-              {/* INPUT 4 */}
-              <textarea
-                className={inputStyles}
-                rows={4}
-                cols={50}
-                placeholder="MESSAGE"
-                {...register("message", {
-                  required: true,
-                  maxLength: 2000,
-                })}
-                onChange={(e) => {
-                  setMessage(e.target.value);
-                }}
-              />
-              {errors.message && (
-                <p className="mt-1 text-primary-500">
-                  {errors.message.type == "required" && "This field is requied"}
-                  {errors.message.type == "maxLength" && "Max length is 2000"}
-                </p>
-              )}
-
-              <button
-                type="submit"
-                className="mt-5 rounded-lg bg-secondary-500 px-20 py-3 transition duration-500 hover:text-white"
-                onClick={onSubmit}
-              >
-                SUBMIT
-              </button>
-            </form>
           </motion.div>
           <motion.div
             className="relative mt-16 basis-2/5 md:mt-0"

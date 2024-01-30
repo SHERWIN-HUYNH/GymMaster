@@ -15,17 +15,23 @@ router
     return c.json({ message: "Sign up successfully!" });
   })
   .post("/sign-in", async (c) => {
-    const { email,fullname, password } = await c.req.json();
+    const { email, password } = await c.req.json();
 
-    const accessToken = await AuthService.signIn(email,fullname, password);
+    const accessToken = await AuthService.signIn(email, password);
 
     return c.json({ accessToken: accessToken });
   })
+  .post("/forgot-password",async (c) => {
+    const { email } = await c.req.json();
+    await AuthService.forgotPassword(email);
+    return c.json({ message: "Email exits" });
+  })
+
   // .post(
   //   "/forgot-password",
   //   zValidator("json", forgotPasswordDto),
   //   async (c) => {
-  //     const { email } = await c.req.json();
+  //     const { email,fullName } = await c.req.json();
   //     await AuthService.forgotPassword(email);
 
   //     return c.json({
@@ -34,13 +40,3 @@ router
   //     });
   //   },
   // )
-  .post("/reset-password", auth, async (c) => {
-    const user = c.get("user");
-    const { password } = await c.req.json();
-    await AuthService.resetPassword(user, password);
-
-    return c.json({
-      message: "Reset password successfully! Please login again",
-      status: 200,
-    });
-  });

@@ -17,10 +17,11 @@ import {
 export type SignIn = z.infer<typeof loginSchema>;
 
 interface Props {
-  onSubmit: SubmitHandler<SignIn>;
+  onSubmit: SubmitHandler<SignIn>,
+  onForgotPasswordClick: () => void
 }
 
-export default function FormSignIn({ onSubmit }: Props) {
+export default function FormSignIn({ onSubmit,onForgotPasswordClick }: Props) {
   const {
     register,
     handleSubmit,
@@ -59,6 +60,7 @@ export default function FormSignIn({ onSubmit }: Props) {
         {errors.password && (
           <p className="mt-1 text-primary-500">{errors.password.message}</p>
         )}
+        <p className="hover:text-primary-200 text-sm font-bold text-primary-500 underline hover:cursor-pointer" onClick={onForgotPasswordClick}>Forgot password </p>
         <Button
           type="submit"
           className="mt-5 w-full rounded-lg bg-secondary-500 px-20 py-3 transition duration-500 hover:text-white"

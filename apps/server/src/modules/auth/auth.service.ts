@@ -69,36 +69,27 @@ export class AuthService {
       html: `<a href='https://gym-master-server.vercel.app'> Reset password </a>`,
     });
   }
-  // static async forgotPassword(email: string) {
-  //   const user = await UsersService.getByWithError(email);
-  //   const accessToken = AuthService.createToken(user);
 
-  //   await mailService.sendMail({
-  //     to: user.email,
-  //     subject: "Reset password",
-  //     html: `<a href='https://airbnb-clone-nu-rouge.vercel.app/reset-password?token=${accessToken}'> Reset password </a>`,
-  //   });
-  // }
 
-  // static async resetPassword(user: User, newPassword: string) {
-  //   const isMatch = await bcrypt.compare(newPassword, user.password);
+  static async resetPassword(user: User, newPassword: string) {
+    const isMatch = await bcrypt.compare(newPassword, user.password);
 
-  //   if (isMatch) {
-  //     throw new UnauthorizedException(
-  //       "New password must be different from old password",
-  //     );
-  //   }
+    if (isMatch) {
+      throw new UnauthorizedException(
+        "New password must be different from old password",
+      );
+    }
 
-  //   const salt = bcrypt.genSaltSync();
-  //   const hashedNewPassword = await bcrypt.hash(newPassword, salt);
+    const salt = bcrypt.genSaltSync();
+    const hashedNewPassword = await bcrypt.hash(newPassword, salt);
 
-  //   return db.user.update({
-  //     where: {
-  //       email: user.email,
-  //     },
-  //     data: {
-  //       password: hashedNewPassword,
-  //     },
-  //   });
-  // }
+    return db.user.update({
+      where: {
+        email: user.email,
+      },
+      data: {
+        password: hashedNewPassword,
+      },
+    });
+  }
 }

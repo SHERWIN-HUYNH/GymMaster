@@ -21,6 +21,8 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { SignIn } from "./FormSignIn";
 import FormSignIn from "./FormSignIn";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import ForgotPasswordForm from "./ForgotPasswordForm"
 type Props = {
   isTopOfPage: boolean;
   selectedPage: SelectedPage;
@@ -32,8 +34,7 @@ const Navbar = ({ isTopOfPage, selectedPage, setSelectedPage }: Props) => {
   const [isMenuToggled, setIsMenuToggled] = useState(false);
   const isAboveMediumScreens = useMediaQuery("(min-width: 1060px)");
   const navabarBackground = isTopOfPage ? "" : "bg-primary-100 drop-shadow";
-
-
+  const [tab, setTab] = useState<"sign-in" | "forgot-password">("sign-in");
   const onLoginSubmit = async (data: SignIn) => {
     try {
       const res = await signIn(data);
@@ -42,6 +43,18 @@ const Navbar = ({ isTopOfPage, selectedPage, setSelectedPage }: Props) => {
       if (error instanceof Error) toast.error(error.message);
     }
   };
+  const onForgotPassword = async (data: ForgotPassword) => {
+    try {
+   await forgotPassword(data);
+      toast.success("Forgot password successfully")
+    } catch (error) {
+      if (error instanceof Error) toast.error(error.message);
+    }
+  };
+  const onOpenChange =async () => {
+    if(tab != 'sign-in')
+      setTab('sign-in')
+  }
   return (
     <nav>
       <div
@@ -78,7 +91,7 @@ const Navbar = ({ isTopOfPage, selectedPage, setSelectedPage }: Props) => {
                   />
                 </div>
                 <div className={`${flexBetween} gap-8`}>
-                  <Dialog>
+                  <Dialog onOpenChange={onOpenChange}>
                     <DialogTrigger asChild>
                       <Button className="rounded-md bg-secondary-500 px-10 py-2 hover:bg-primary-500 hover:text-white">
                         Sign in
@@ -88,26 +101,22 @@ const Navbar = ({ isTopOfPage, selectedPage, setSelectedPage }: Props) => {
                       <DialogHeader>
                         <DialogTitle>Sign in</DialogTitle>
                       </DialogHeader>
-
-                      {/* <FormSigIn/> */}
-                      <FormSignIn onSubmit={onLoginSubmit} />
-                      {/* FORGOT PASSWORD */}
-                      <Dialog>
-                          <DialogTrigger>
-                            {" "}
-                            <div>
-                              <p
-                                className="hover:text-primary-200 text-sm font-bold text-primary-500 underline hover:cursor-pointer"
-                                onClick={() => console.log("HELLO")}
-                              >
-                                Forget password ?
-                              </p>
-                            </div>
-                          </DialogTrigger>
-                          <DialogContent className="sm:max-w-[425px]">
-                            <FormSignIn onSubmit={onLoginSubmit} />
-                          </DialogContent>
-                        </Dialog>
+                      {/* FORM SIGN-IN AND FORGOT-PASSWORD */}
+                      <Tabs value={tab} className="w-[400px]">
+                        {/* SIGN IN */}
+                        <TabsContent value="sign-in">
+                          <FormSignIn
+                            onSubmit={onLoginSubmit}
+                            onForgotPasswordClick={() =>
+                              setTab("forgot-password")
+                            }
+                          />
+                        </TabsContent>
+                        {/* FORGOT-PASSWORD */}
+                        <TabsContent value="forgot-password">
+                         <ForgotPasswordForm onSubmit={onForgotPassword}/>
+                        </TabsContent>
+                      </Tabs>
                     </DialogContent>
                   </Dialog>
                   <ActionButton setSelectedPage={setSelectedPage}>

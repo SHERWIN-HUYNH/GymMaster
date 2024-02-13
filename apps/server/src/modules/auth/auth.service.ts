@@ -6,37 +6,32 @@ import * as bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { UsersService } from "../users/users.services";
 import { mailService } from "@/lib/mail.service";
-import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
+
 
 const ACCESS_TOKEN_EXPIRE_IN = 60 * 60;
 
 export class AuthService {
   static async signUp(email: string,fullName:string, password: string) {
-      try {
-        const user = await db.user.findUnique({
-          where: {
-            email,
-          },
-        });
-    
-        if (user) {
-          throw new BadRequestException("User already exists");
-        }
-    
-        const salt = bcrypt.genSaltSync();
-        const hashedPassword = await bcrypt.hash(password, salt);
-    
-       await db.user.create({
-          data: {
-            email,
-            fullName,
-            password: hashedPassword,
-          },
-        });
-      } catch (error) {
-        if(error instanceof PrismaClientKnownRequestError)
-        throw new BadRequestException("FAIL FAIL")
-      }
+    const user = await db.user.findUnique({
+      where: {
+        email,
+      },
+    });
+
+    if (user) {
+      throw new BadRequestException("User already exists");
+    }
+
+    const salt = bcrypt.genSaltSync();
+    const hashedPassword = await bcrypt.hash(password, salt);
+
+    await db.user.create({
+      data: {
+        email,
+        fullName,
+        password: hashedPassword,
+      },
+    });
   }
 
   static createToken(user: User) {

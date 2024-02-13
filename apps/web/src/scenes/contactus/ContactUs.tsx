@@ -24,6 +24,7 @@ function ContactUs({ setSelectedPage }: Props) {
     try {
       const res = await signUp(data);
       setToken(res.accessToken);
+      toast.success("Sign Up successfully!")
     } catch (error) {
       if (error instanceof Error) toast.error(error.message);
     }

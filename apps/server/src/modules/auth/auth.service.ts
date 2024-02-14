@@ -32,6 +32,7 @@ export class AuthService {
         password: hashedPassword,
       },
     });
+    
   }
 
   static createToken(user: User) {

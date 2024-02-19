@@ -41,9 +41,9 @@ export const resetPassword = async (token: string, password: string) => {
   );
 };
 
-export const forgotPassword = async ({email}: string) => {
-  const res = await request.post("/forgot-password", {
-    password,
-  });
-  return res.data
-};
+// export const forgotPassword = async ({email}: string) => {
+//   const res = await request.post("/forgot-password", {
+//     password,
+//   });
+//   return res.data
+// };

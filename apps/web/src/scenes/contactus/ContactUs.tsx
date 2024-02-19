@@ -1,13 +1,8 @@
 import { SelectedPage } from "@/shared/types";
 import { motion } from "framer-motion";
-import React, { useState } from "react";
-import { useForm } from "react-hook-form";
 import ContactUsPageGraphic from "@/assets/ContactUsPageGraphic.png";
 import HText from "@/shared/HText";
-import axios from "axios";
-import contactUs from "@/api/contactUs";
 import { signUp } from "@/api/auth";
-import { useQuery } from "@tanstack/react-query";
 import { toast } from "react-toastify";
 import FormSignUp, { SignUp } from "./FormSignUp";
 import { setToken } from "@/utils/token";
@@ -26,9 +21,11 @@ function ContactUs({ setSelectedPage }: Props) {
       setToken(res.accessToken);
       toast.success("Sign Up successfully!")
     } catch (error) {
-      if (error instanceof Error) toast.error(error.message);
+      if (error instanceof Error) 
+        toast.error(error.message);
     }
   };
+
   return (
     <section id="contactus" className="mx-auto w-5/6 pb-32 pt-24">
       <motion.div

@@ -2,7 +2,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {  signUpSchema } from "@/utils/schema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import React from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import * as z from "zod";
 export type SignUp = z.infer<typeof signUpSchema>
@@ -15,7 +14,7 @@ interface Props {
         handleSubmit,
         formState: { errors },
       } = useForm<SignUp>({
-        mode: "onSubmit",
+        mode: "onBlur",
         resolver: zodResolver(signUpSchema),
       });
       const inputStyles = `mb-5 w-full rounded-lg bg-primary-300

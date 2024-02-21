@@ -23,7 +23,7 @@ app.use(
 app.route("/", auth);
 
 
-app.notFound((c: { json: (arg0: { message: string; statusCode: number; }, arg1: number) => any; }) => {
+app.notFound((c) => {
   return c.json(
     {
       message: "Not found",

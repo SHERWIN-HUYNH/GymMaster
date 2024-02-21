@@ -2,7 +2,7 @@ import { User } from "@prisma/client";
 
 declare global {
   interface Error {
-    status?: number;
+    status?:  StatusCode;
   }
 }
 

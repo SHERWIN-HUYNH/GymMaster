@@ -1,5 +1,6 @@
 import axios from "axios";
 import { request } from "./request";
+import { ForgotPassword } from "@/scenes/navbar/ForgotPasswordForm";
 
 interface Props {
   name: string;
@@ -13,6 +14,9 @@ interface SignUp {
 interface SignIn {
   email: string;
   password: string;
+}
+interface forgotPassword{
+  email:string;
 }
 export const signIn = async ({ email, password }: SignIn) => {
   const res = await request.post("/sign-in", {
@@ -41,9 +45,9 @@ export const resetPassword = async (token: string, password: string) => {
   );
 };
 
-// export const forgotPassword = async ({email}: string) => {
-//   const res = await request.post("/forgot-password", {
-//     password,
-//   });
-//   return res.data
-// };
+export const forgotPassword = async ({email}: ForgotPassword) => {
+  const res = await request.post("/forgot-password", {
+    email,
+  });
+  return res.data
+};
